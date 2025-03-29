@@ -4,6 +4,7 @@ import loader from './loader.gif'
 import LoadingBar from 'react-top-loading-bar'
 
 const Random = () => {
+    const api_key = process.env.REACT_APP_API_KEY; // Make sure this is defined
 
     const [arr, setArr] = useState([]);
     const [loading, setLoading] = useState(true);

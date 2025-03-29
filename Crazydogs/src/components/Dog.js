@@ -7,6 +7,7 @@ import LoadingBar from 'react-top-loading-bar'
 import About from './About';
 
 const Dog = () => {
+    const api_key = process.env.REACT_APP_API_KEY; 
 
     const [arr, setArr] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const Dog = () => {
             try {
                 setLoading(true);
                 setProgress(10);
-                let req = await fetch(`https://api.thedogapi.com/v1/breeds?limit='172'&page='0'&api_key=${apikey}`)
+                let req = await fetch(`https://api.thedogapi.com/v1/breeds?limit='172'&page='0'&api_key=${api_key}`)
                 setProgress(30);
                 let res = await req.json();
                 setProgress(70);

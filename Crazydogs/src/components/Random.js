@@ -45,7 +45,7 @@ const Random = () => {
             }
         };
         fetchRandom();
-    }, []);
+    }, [api_key]);
     return (
 
         <>

@@ -31,7 +31,7 @@ const Dog = () => {
             }
         };
         fetchDogs();
-    }, []);
+    }, [api_key]);
 
     useEffect(() => {
         const footerTimer = setTimeout(() => {

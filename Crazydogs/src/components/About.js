@@ -32,7 +32,7 @@ const About = () => {
                 <a href="mailto:pawanpatidar8538@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
                   <i className="fa-solid fa-envelope"></i>
                 </a>
-                <a href="https://linkedin.com/in/pawan-patidar-47600232b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <a href="https://linkedin.com/in/Pawan8538" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <i className="fa-brands fa-linkedin"></i>
                 </a>
                 <a href="https://github.com/Pawan8538" target="_blank" rel="noopener noreferrer" aria-label="GitHub">

@@ -5,6 +5,9 @@ import '..//App.css'
 import SearchContext from '../context/SearchContext';
 import LoadingBar from 'react-top-loading-bar'
 import About from './About';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+const apikey = process.env.REACT_APP_API_KEY;
 
 const Dog = () => {
 
@@ -12,6 +15,8 @@ const Dog = () => {
     const [loading, setLoading] = useState(true);
     const [progress, setProgress] = useState(0);
     const { query } = useContext(SearchContext);
+    const [page, setPage] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
     const [showFooter, setShowFooter] = useState(false);
 
     useEffect(() => {
@@ -19,7 +24,7 @@ const Dog = () => {
             try {
                 setLoading(true);
                 setProgress(10);
-                let req = await fetch(`https://api.thedogapi.com/v1/breeds?limit='172'&page='0'&api_key=${apikey}`)
+                let req = await fetch(`https://api.thedogapi.com/v1/breeds?limit=25&page=${page}&api_key=${apikey}`)
                 setProgress(30);
                 let res = await req.json();
                 setProgress(70);
@@ -31,7 +36,8 @@ const Dog = () => {
             }
         };
         fetchDogs();
-    }, [api_key]);
+        // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         const footerTimer = setTimeout(() => {
@@ -41,12 +47,55 @@ const Dog = () => {
         return () => clearTimeout(footerTimer);
       }, [loading]);
 
+     
+      const fetchMoreData = async () => {
+        try {
+            const nextPage = page + 1;
+            setProgress(10);
+            let req = await fetch(`https://api.thedogapi.com/v1/breeds?limit=15&page=${nextPage}&api_key=${apikey}`);
+            setProgress(30);
+            let res = await req.json();
+            setProgress(70);
+    
+            if (res.length > 0) {
+                setArr(prevArr => [...prevArr, ...res]);
+                setPage(nextPage);
+            }
+    
+            if (res.length < 15) {
+                setHasMore(false);
+            }
+    
+            setProgress(100);
+        } catch (err) {
+            alert('An error occurred while fetching the image.');
+        }
+    };
+    
+    
+    
+
     return (
         <>
             <LoadingBar color='#f11946' progress={progress} onLoaderFinished={() => setProgress(0)} />
             {loading && <div className="text-center">
                 <img className="my-3" src={loader} alt="loading" />
             </div>}
+            
+            <InfiniteScroll
+                dataLength={arr.length} //This is important field to render the next data
+                next={fetchMoreData}
+                hasMore={hasMore}
+                loader={<div className="text-center">
+                    <img className="my-3" src={loader} alt="loading" />
+                  </div>}
+                scrollThreshold={0.95}
+                endMessage={
+                <p style={{ textAlign: 'center' }}>
+                <b>Thanks for Visting!</b>
+                </p>
+                }
+            >   
 
             <ul className='container col-md-4'>
                 {arr.map((breed, index) => {
@@ -70,6 +119,7 @@ const Dog = () => {
            {showFooter && <div className='footer container-fluid' >
             <About/>
             </div>}
+            </InfiniteScroll> 
         </>
     )
 }

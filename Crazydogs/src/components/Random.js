@@ -2,6 +2,7 @@ import React, { useEffect,  useState } from 'react'
 import Randominfo from './Randominfo'
 import loader from './loader.gif'
 import LoadingBar from 'react-top-loading-bar'
+const apikey = process.env.REACT_APP_API_KEY;
 
 const Random = () => {
 
@@ -12,7 +13,7 @@ const Random = () => {
     const handleRandom = async (e) => {
         try {
             e.preventDefault();
-            const url = `https://api.thedogapi.com/v1/images/search?has_breeds=true&order=RANDOM&page=0&limit1&api_key=${api_key}`
+            const url = `https://api.thedogapi.com/v1/images/search?has_breeds=true&order=RANDOM&page=0&limit1&api_key=${apikey}`
             setProgress(10);
             setLoading(true);
             let req = await fetch(url);
@@ -30,7 +31,7 @@ const Random = () => {
     useEffect(() => {
         const fetchRandom = async () => {
             try {
-                const url = `https://api.thedogapi.com/v1/images/search?has_breeds=true&order=RANDOM&page=0&limit1&api_key=${api_key}`
+                const url = `https://api.thedogapi.com/v1/images/search?has_breeds=true&order=RANDOM&page=0&limit1&api_key=${apikey}`
                 setProgress(10);
                 setLoading(true);
                 let req = await fetch(url);
@@ -45,7 +46,7 @@ const Random = () => {
             }
         };
         fetchRandom();
-    }, [api_key]);
+    }, []);
     return (
 
         <>
